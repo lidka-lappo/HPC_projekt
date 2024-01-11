@@ -26,13 +26,10 @@ bool isQuantity(const std::string& token) {
     }
 }
 
-int main() {
-
-    //READING DATA FROM FILE
+void open_data(vector<ProductionData> *productionData)
+{
     std::ifstream file("way_of_production.txt");
     std::string line;
-    std::vector<ProductionData> productionData;
-
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         ProductionData data;
@@ -88,10 +85,20 @@ int main() {
                 
         }
         
- productionData.push_back(data);
+        productionData->push_back(data);
 
   
     }
+
+}
+
+int main() {
+
+    //READING DATA FROM FILE
+
+    std::vector<ProductionData> productionData;
+    open_data(&productionData);
+    
 
     // Output the read data (just for demonstration)
    for (const auto& data : productionData) {
