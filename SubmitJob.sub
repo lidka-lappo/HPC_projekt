@@ -1,0 +1,8 @@
+executable = /afs/cern.ch/user/l/llappo/private/all_isotopes/Job.sh
+arguments  = $(ClusterId) $(ProcId)
+output     = output/Job.$(ClusterId).$(ProcId).out
+error      = error/Job.$(ClusterId).$(ProcId).err
+log        = log/Job.$(ClusterId).$(ProcId).log
++JobFlavour = "espresso"
+queue 1
+
