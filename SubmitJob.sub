@@ -1,4 +1,4 @@
-executable = /afs/cern.ch/user/l/llappo/private/all_isotopes/Job.sh
+executable = /afs/cern.ch/user/l/llappo/private/:wqall_isotopes/Job.sh
 arguments  = $(ClusterId) $(ProcId)
 output     = output/Job.$(ClusterId).$(ProcId).out
 error      = error/Job.$(ClusterId).$(ProcId).err

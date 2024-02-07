@@ -185,9 +185,8 @@ int main() {
     vector<route> MainQueue_second;
     std::vector<ProductionData> productionData;
     open_data(productionData);
-    int Z = 9; //1 //19  //21 //9
-    int A = 20; //1 //38 //48 //20
-
+    int Z = 9; 
+    int A = 20; 
     route tmp_route;
     tmp_route.isotopes.push_back(names[Z] + to_string(A));
     tmp_route.frequency.push_back(1);

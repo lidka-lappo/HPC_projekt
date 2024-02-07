@@ -1,3 +1,6 @@
+submit on condor lxplus:
+condor_submit SubmitJob.sub
+
 This project is fragment of my bigger work conected with analisys
 of nucei after annihilation with antiproton
 
@@ -25,4 +28,97 @@ Indicates whether a route is complete or not
 Parallel Processing:
     Utilizes OpenMP for parallel processing to enhance performance.
     Parallelism is employed in loops iterating over isotopes and their quantities.
+
+DOKUMENTACJA:
+ Program odczytuje dane produkcyjne z pliku i przetwarza je, generując trasy oraz izotopy z częstotliwościami.
+
+
+ struct Index - Struktura reprezentująca indeks z wartościami i oraz j.
+
+
+struct ProductionData - Struktura reprezentująca dane produkcyjne dla każdego izotopu. Posiada nazwę izotopu, wektor izotopów i wektor ilości tworzonego izotopu. 
+
+
+struct route - Struktura reprezentująca trasę z izotopami i częstotliwościami. Posiada nazwę izotopu, wektor izotopów i wektor częstotliwości. A także rodzica izotopu, i flage zakończenia. 
+
+
+
+
+isQuantity - Sprawdza, czy dany łańcuch znaków reprezentuje ilość.
+ Używana do czytania z pliku.
+
+
+open_data - Otwiera i odczytuje dane produkcyjne z pliku.
+
+
+ get_vektor - Pobiera wektor danych produkcyjnych dla danej nazwy izotopu.
+ 
+
+find_the_parent - Znajduje indeks rodzica izotopu w wektorze 
+
+MAKING WEKTORS
+Petle tworzoce wektory zwiazane z powstawaniem interesujacego nas pierwiasta
+
+GETTING ROUTES
+Petle odczytujace poprawnie drogi do otrzymania interesujacego nas pierwsiatka
+
+W MAIN
+Odczytanie danych
+Deklaracja interesujacego pierwiastka
+stworzenie wektorow
+otrzymanie drog
+wypisanie drog
+
+DLA 
+Sc48
+Route Isotopes and Quantities: 
+V51, Sc48, Finish? 1
+
+Route Isotopes and Quantities: 
+Fe60, Mn56, V52, Sc48, Finish? 1
+
+
+
+PRZYKŁADY OUTPUTU:
+DLA F20
+
+Route Isotopes and Quantities: 
+Na23, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Mg26, Ne23, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Al27, Na24, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Si32, Al29, Na24, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+S34, Si31, Mg28, Na25, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Ar42, Cl38, P34, Si31, Mg28, Na25, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Ar42, Cl39, P34, Si31, Mg28, Na25, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Si32, Al28, Na24, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Si30, Mg27, Ne24, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Si30, Mg27, Ne24, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+S34, Si31, Mg28, Na25, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Ar42, Cl38, P34, Si31, Mg28, Na25, F20, Finish? 1
+
+Route Isotopes and Quantities: 
+Ar42, Cl39, P34, Si31, Mg28, Na25, F20, Finish? 1
+
 
