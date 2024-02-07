@@ -8,8 +8,6 @@
 #include "timing.h"
 
 
-
-
 using namespace std;
 //H na A zamienione
 //string names[20] = {"empty", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"};
@@ -59,7 +57,7 @@ bool isQuantity(const std::string& token) {
     }
 }
 
-void open_data(vector<ProductionData> &productionData)
+void open_data(vector<ProductionData> *productionData)
 {
     b_t(); // start timing
     std::ifstream file("way_of_production.txt");
@@ -119,7 +117,7 @@ void open_data(vector<ProductionData> &productionData)
                 
         }
         
-        productionData.push_back(data);
+        productionData->push_back(data);
 
   
     }
@@ -184,9 +182,9 @@ int main() {
     route MainQueue;
     vector<route> MainQueue_second;
     std::vector<ProductionData> productionData;
-    open_data(productionData);
-    int Z = 9; //1 //19  //21 //9
-    int A = 20; //1 //38 //48 //20
+    open_data(&productionData);
+    int Z = 21; //1 //19  //21
+    int A = 48; //1 //38 //48
 
     route tmp_route;
     tmp_route.isotopes.push_back(names[Z] + to_string(A));
@@ -218,19 +216,17 @@ int main() {
             //cout<<"Calculating: "<<MainQueue.isotopes.size()<<endl;
             route full_route;
                         
-            #pragma omp parallel for
-            for(int j = 0; j < current.isotopes.size()-1; j++)
+            for(int j =0; j<current.isotopes.size()-1; j++)
             {
-                if(best_frequency <= current.quantities[j]/(1000000.0))
+                //cout<<current.isotopes[j];
+                if(best_frequency<=current.quantities[j]/(1000000.0))
                 {
-                    #pragma omp critical
-                    {
-                        MainQueue.isotopes.push_back(current.isotopes[j]);
-                        MainQueue.frequency.push_back(current.quantities[j]/(1000000.0));
-                        full_route.isotopes.push_back(current.isotopes[j]);
-                        full_route.frequency.push_back(current.quantities[j]/(1000000.0));
-                        full_route.parent_isotope = current.isotope;
-                    }
+                    MainQueue.isotopes.push_back(current.isotopes[j]);
+                    MainQueue.frequency.push_back(current.quantities[j]/(1000000.0));
+                    full_route.isotopes.push_back(current.isotopes[j]);
+                    full_route.frequency.push_back(current.quantities[j]/(1000000.0));
+                    full_route.parent_isotope = current.isotope;
+                    //std::cout << "Isotope: " << current.isotopes[j] << " Quantity: " << current.quantities[j] << endl;
                 }
             }
             if(!full_route.isotopes.empty())
@@ -268,27 +264,28 @@ int main() {
 
     b_t();
 
-    #pragma omp parallel for
-    for(int i = 0; i < routes.size(); i++)
+    for(int i = 0;  i <routes.size(); i++)
     { 
+        
         route current;
-        current = routes[i];
+        current=routes[i];
         while(!current.finish)
         {
             Index parent_index = find_the_parent(current.parent_isotope, MainQueue_second);
-            #pragma omp critical
-            {
-                routes[i].isotopes.push_back(MainQueue_second[parent_index.i].isotopes[parent_index.j]);
-                routes[i].frequency.push_back(MainQueue_second[parent_index.i].frequency[parent_index.j]);
-                route tmp_current;
-                tmp_current.isotopes.push_back(MainQueue_second[parent_index.i].isotopes[parent_index.j]);
-                tmp_current.finish = MainQueue_second[parent_index.i].finish;
-                tmp_current.parent_isotope = MainQueue_second[parent_index.i].parent_isotope;
-                current = tmp_current;
-            }
+            //cout<< parent_index.i<<parent_index.j<<endl;
+            routes[i].isotopes.push_back(MainQueue_second[parent_index.i].isotopes[parent_index.j]);
+            routes[i].frequency.push_back(MainQueue_second[parent_index.i].frequency[parent_index.j]);
+            route tmp_current;
+            tmp_current.isotopes.push_back(MainQueue_second[parent_index.i].isotopes[parent_index.j]);
+            tmp_current.finish = MainQueue_second[parent_index.i].finish;
+            tmp_current.parent_isotope = MainQueue_second[parent_index.i].parent_isotope;
+            current = tmp_current;
+
         }
-        routes[i].finish = true;
+        routes[i].finish=true;
+
     }
+
     double t_routes = e_t(); // stop timing
     printf("# MAKING ROUTES TIME: %f sec\n", t_routes);
   
